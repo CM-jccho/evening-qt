@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { Check, Moon, Settings, Sun } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Check, CloudCheck, CloudOff, Moon, Settings, Sun } from 'lucide-react'
 import rawPassages from './data/passages.json'
 import type { DayRecord, PersonKey, Reflection, Store, Theme } from './lib/types'
 import { emptyRecord } from './lib/types'
@@ -13,6 +13,8 @@ import {
 } from './lib/storage'
 import { buildShareCode, buildShareLink, parseShareInput, type SharePayload } from './lib/share'
 import { demoRecord } from './lib/demo'
+import { useSync } from './lib/sync/useSync'
+import { applyPatchToStore, type StorePatch } from './lib/sync/engine'
 import { sameDayInPast, sampleSameDayInPast } from './lib/past'
 import { translate } from './i18n'
 import { PassagePanel, type PassageView } from './components/PassagePanel'
@@ -47,6 +49,16 @@ export default function App() {
 
   const storeRef = useRef(store)
   storeRef.current = store
+
+  /* 두 폰 동기화: 이 기기의 변화를 올리고, 상대가 올린 글을 이 기기 기록에 합친다 */
+  const applyPatch = useCallback((patch: StorePatch) => {
+    setStore((prev) => applyPatchToStore(prev, patch))
+  }, [])
+  const sync = useSync({
+    store,
+    applyPatch,
+    onToast: (key) => setToast({ id: Date.now(), text: translate(storeRef.current.settings.lang, key) }),
+  })
   const lang = store.settings.lang
   const t = useMemo(
     () => (key: Parameters<typeof translate>[1], vars?: Record<string, string | number>) =>
@@ -97,6 +109,12 @@ export default function App() {
   useEffect(() => {
     setDemoDraft(null)
   }, [viewDate, lang])
+
+  /* 샘플을 보는 동안에는 어떤 글도 서버로 올라가지 않는다 */
+  const setSyncPaused = sync.setPaused
+  useEffect(() => {
+    setSyncPaused(demoOn)
+  }, [demoOn, setSyncPaused])
 
   /* the page notices midnight without moving the writer's page */
   useEffect(() => {
@@ -245,6 +263,15 @@ export default function App() {
      into an already open tab arrives as a hash change, so watch for both */
   useEffect(() => {
     const readLink = () => {
+      if (window.location.hash.includes('#sync=')) {
+        const invite = window.location.hash
+        window.history.replaceState(null, '', window.location.pathname + window.location.search)
+        void sync.acceptInvite(invite).then((error) => {
+          const message = error ? translate(lang, 'sync.inviteInvalid') : translate(lang, 'sync.inviteAccepted')
+          setToast({ id: Date.now(), text: message })
+        })
+        return
+      }
       if (!window.location.hash.includes('selah=')) return
       const payload = parseShareInput(window.location.hash)
       window.history.replaceState(null, '', window.location.pathname + window.location.search)
@@ -325,6 +352,23 @@ export default function App() {
               {saveState === 'saved' ? <Check size={13} aria-hidden="true" /> : null}
               {saveLabel}
             </span>
+            {sync.passphrase ? (
+              <button
+                type="button"
+                className="tool-button tool-button-icon"
+                onClick={() => setDialog('settings')}
+                aria-label={t('a11y.syncState', {
+                  state: sync.info.status === 'live' ? t('sync.statusLive') : t('sync.statusOffline'),
+                })}
+                title={t('sync.header')}
+              >
+                {sync.info.status === 'live' ? (
+                  <CloudCheck size={16} aria-hidden="true" />
+                ) : (
+                  <CloudOff size={16} aria-hidden="true" />
+                )}
+              </button>
+            ) : null}
             <button type="button" className="tool-button" onClick={toggleLang} lang={lang === 'ko' ? 'en' : 'ko'}>
               {t('nav.language')}
             </button>
@@ -436,7 +480,7 @@ export default function App() {
         <Archive lang={lang} records={store.records} selected={viewDate} onOpenDate={openDate} />
 
         <footer className="footer">
-          <p className="fine-print">{t('footer.note')}</p>
+          <p className="fine-print">{sync.passphrase ? t('footer.noteSync') : t('footer.note')}</p>
           <p className="fine-print">{t('footer.translation')}</p>
         </footer>
       </main>
@@ -477,6 +521,7 @@ export default function App() {
         theme={store.settings.theme}
         names={store.settings.names}
         chime={store.settings.chime}
+        sync={sync}
         onNameChange={setName}
         onTheme={setTheme}
         onChime={setChime}

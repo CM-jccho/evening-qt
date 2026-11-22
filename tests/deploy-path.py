@@ -15,7 +15,9 @@ import json
 import os
 import shutil
 import socketserver
+import subprocess
 import threading
+import time
 from datetime import date
 
 from playwright.sync_api import sync_playwright
@@ -103,6 +105,22 @@ def run():
         check("지난 기록 섹션", page.locator(".past-year").count() == 1)
         check("지난 기록 내용", "작년 오늘의 묵상" in page.locator(".past").inner_text())
         check("콘솔 오류 없음", not errors, str(errors[:3]))
+
+        # 동기화 청크처럼 나중에 불러오는 자산도 하위 경로에서 온다
+        if os.environ.get("SYNC_CHECK") == "1":
+            page.get_by_role("button", name="설정").click()
+            page.wait_for_selector("dialog[open]")
+            page.get_by_label("부부 암호").fill("하위경로 확인용 부부 암호")
+            page.get_by_role("button", name="연결하기").click()
+            try:
+                page.wait_for_selector(".sync-status[data-state='live']", timeout=15000)
+            except Exception:
+                pass
+            page.wait_for_timeout(1500)
+            chunks = [url for url, _ in responses if "/assets/dist-" in url]
+            check("동기화 청크가 하위 경로에서 온다", bool(chunks) and all(f"/{SUB}/assets/" in u for u in chunks), str(chunks[:2]))
+            check("하위 경로에서도 동기화가 붙는다", page.locator(".sync-status[data-state='live']").count() == 1)
+            page.get_by_role("button", name="닫기").first.click()
 
         page.locator(".past").scroll_into_view_if_needed()
         page.evaluate("window.scrollBy(0, -72)")

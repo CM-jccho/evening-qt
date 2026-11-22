@@ -1513,6 +1513,56 @@ textarea {
   color: var(--color-ink-muted);
 }
 
+/* ---------- couple sync (settings) ---------- */
+
+.sync-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--color-ink-soft);
+}
+
+.sync-status[data-state="live"] svg {
+  color: var(--color-accent);
+}
+
+.sync-status[data-state="offline"],
+.sync-status[data-state="error"] {
+  color: var(--color-danger);
+}
+
+.sync-status-when {
+  color: var(--color-ink-muted);
+}
+
+.sync-note {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+}
+
+.sync-off {
+  margin-top: 16px;
+  min-height: 44px;
+  padding: 0 2px;
+  font-size: 14px;
+  color: var(--color-ink-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sync-off:hover {
+  color: var(--color-danger);
+}
+
+.sync-confirm {
+  margin-top: 16px;
+}
+
 /* ---------- responsive ---------- */
 
 @media (max-width: 960px) {

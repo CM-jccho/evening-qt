@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { Download, Upload } from 'lucide-react'
 import { Dialog } from './Dialog'
+import { SyncSection } from './SyncSection'
 import type { Lang, Theme } from '../lib/types'
+import type { SyncApi } from '../lib/sync/useSync'
 import { translate } from '../i18n'
 
 interface Props {
@@ -10,6 +12,7 @@ interface Props {
   theme: Theme
   names: [string, string]
   chime: boolean
+  sync: SyncApi
   onNameChange: (index: 0 | 1, value: string) => void
   onTheme: (theme: Theme) => void
   onChime: (value: boolean) => void
@@ -25,6 +28,7 @@ export function SettingsDialog({
   theme,
   names,
   chime,
+  sync,
   onNameChange,
   onTheme,
   onChime,
@@ -68,6 +72,8 @@ export function SettingsDialog({
           </label>
         </div>
       </div>
+
+      <SyncSection lang={lang} sync={sync} />
 
       <div className="setting-block">
         <h3 className="setting-title">{t('settings.appearance')}</h3>
