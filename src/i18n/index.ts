@@ -155,7 +155,7 @@ const en: Record<Key, string> = {
   'passage.start': 'Write tonight',
   'passage.fromYou': 'Written by you',
   'passage.rhythm': 'Read it once aloud, once in silence.',
-  'passage.flow': 'Then a line in your own column, and prayer to close the day.',
+  'passage.flow': 'Write a line in your own column, then close the day in prayer.',
   'passage.changed': 'Tonight’s passage has changed.',
   'passageList.fromList': 'Choose from the list',
   'spread.kicker': 'Written together',
@@ -171,7 +171,7 @@ const en: Record<Key, string> = {
   'share.column': 'Send with a link',
   'share.title': 'Send with a link',
   'share.lead':
-    'Copy the link and send it in a message. When the other opens it, both columns sit on tonight’s page.',
+    'Copy the link and send it in a message. When the other person opens it, both columns sit on tonight’s page.',
   'share.copyCode': 'Copy code',
   'share.copyLink': 'Copy link',
   'share.copyHint': 'If the link does not open, copy the code and paste it instead.',
