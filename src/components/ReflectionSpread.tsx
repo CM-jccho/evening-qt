@@ -76,6 +76,7 @@ export function ReflectionSpread({ record, names, lang, onNameChange, onField, o
           <MessageSquareText size={15} aria-hidden="true" />
           {t('share.import')}
         </button>
+        <p className="foot-hint">{t('spread.footHint')}</p>
       </div>
     </section>
   )

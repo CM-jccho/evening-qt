@@ -1,4 +1,4 @@
-import { Check, Copy, Link2 } from 'lucide-react'
+import { Check, ChevronDown, Copy, Link2 } from 'lucide-react'
 import { Dialog } from './Dialog'
 import type { Lang } from '../lib/types'
 import { translate } from '../i18n'
@@ -47,27 +47,34 @@ export function ShareDialog({
       {mode === 'share' ? (
         <>
           <p className="dialog-lead">{t('share.lead')}</p>
-          <label className="visually-hidden" htmlFor="share-code">
-            {t('share.title')}
-          </label>
-          <textarea
-            id="share-code"
-            className="code-box"
-            value={code}
-            readOnly
-            rows={4}
-            onFocus={(e) => e.currentTarget.select()}
-          />
-          <div className="dialog-actions">
-            <button type="button" className="button-primary" onClick={() => onCopy('code')}>
-              {copied === 'code' ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
-              {copied === 'code' ? t('share.copied') : t('share.copyCode')}
-            </button>
-            <button type="button" className="button-quiet" onClick={() => onCopy('link')}>
-              {copied === 'link' ? <Check size={15} aria-hidden="true" /> : <Link2 size={15} aria-hidden="true" />}
+          <div className="dialog-actions dialog-actions-start">
+            <button type="button" className="button-primary" onClick={() => onCopy('link')}>
+              {copied === 'link' ? <Check size={16} aria-hidden="true" /> : <Link2 size={16} aria-hidden="true" />}
               {copied === 'link' ? t('share.copied') : t('share.copyLink')}
             </button>
+            <button type="button" className="button-quiet" onClick={() => onCopy('code')}>
+              {copied === 'code' ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
+              {copied === 'code' ? t('share.copied') : t('share.copyCode')}
+            </button>
           </div>
+          <p className="dialog-hint">{t('share.copyHint')}</p>
+          <details className="code-details">
+            <summary>
+              <ChevronDown size={15} className="code-chevron" aria-hidden="true" />
+              {t('share.showCode')}
+            </summary>
+            <label className="visually-hidden" htmlFor="share-code">
+              {t('share.showCode')}
+            </label>
+            <textarea
+              id="share-code"
+              className="code-box"
+              value={code}
+              readOnly
+              rows={4}
+              onFocus={(e) => e.currentTarget.select()}
+            />
+          </details>
         </>
       ) : (
         <>

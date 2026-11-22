@@ -49,17 +49,11 @@ export function PastYears({ entries, lang, names, viewDate, sample, passages, on
               const secondaryRef = lang === 'ko' ? passage.refEn : passage.refKo
               return (
                 <li className="past-year" key={entry.key}>
-                  <div className="past-when">
+                  <div className="past-head">
                     <h3 className="past-year-number">{entry.year}</h3>
-                    <p className="past-ago">
-                      {entry.ago === 1 ? t('past.agoOne') : t('past.ago', { n: entry.ago })}
-                    </p>
+                    <p className="past-ago">{entry.ago === 1 ? t('past.agoOne') : t('past.ago', { n: entry.ago })}</p>
                     {!sample ? (
-                      <button
-                        type="button"
-                        className="button-quiet past-open"
-                        onClick={() => onOpen(entry.key)}
-                      >
+                      <button type="button" className="button-quiet past-open" onClick={() => onOpen(entry.key)}>
                         {t('past.open')}
                         <ArrowUpRight size={14} aria-hidden="true" />
                       </button>

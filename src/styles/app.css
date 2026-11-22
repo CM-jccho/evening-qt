@@ -1,7 +1,7 @@
 /* Hallmark · scope: app · genre: editorial · shape: app screen
  * theme: custom (pinned by the brief: warm lamp dark and cream paper, ivory ink, one amber)
- * stamp: 밤의 묵상 Selah · screen: the evening passage and the two-person spread · states: empty, writing, saved, joined, timer done
- * pre-emit critique: P5 H5 E4 S5 R4 V4 · weakest: E, a devotional can soften into a greeting card; kept hairline rules, reading-size verse and one amber, no glow
+ * stamp: 밤의 묵상 Selah · screen: the evening passage, the two-person spread and the folded record · states: empty, writing, saved, joined, timer done
+ * pre-emit critique: P5 H5 E4 S5 R5 V4 · weakest: E, a devotional can soften into a greeting card; kept hairline rules, reading-size verse and one amber, no glow
  * built: Hallmark · v2.0.0 */
 
 @import "tailwindcss";
@@ -21,11 +21,11 @@
   --color-surface-2: #221e18;
   --color-sunk: #100e0c;
   --color-ink: #f1e8d6;
-  --color-ink-soft: #d3c7b0;
-  --color-ink-muted: #a99c84;
-  --color-line: #3a342a;
-  --color-line-soft: #2a251f;
-  --color-field-edge: #6f6553;
+  --color-ink-soft: #dcd1bc;
+  --color-ink-muted: #bdaf97;
+  --color-line: #443c30;
+  --color-line-soft: #2e2822;
+  --color-field-edge: #857a64;
   --color-accent: #d8a35c;
   --color-accent-strong: #e8bd7c;
   --color-accent-ink: #1b1510;
@@ -38,7 +38,7 @@
 
   /* measure */
   --page-max: 1080px;
-  --reading: 39rem;
+  --reading: 42rem;
   --radius: 2px;
   --radius-dialog: 4px;
   --shell-pad: 32px;
@@ -53,11 +53,11 @@
   --color-surface-2: #efe7d7;
   --color-sunk: #f7f1e6;
   --color-ink: #26211a;
-  --color-ink-soft: #483f31;
-  --color-ink-muted: #6c5f4b;
+  --color-ink-soft: #453c2e;
+  --color-ink-muted: #5f533f;
   --color-line: #dcd1bd;
   --color-line-soft: #e8dfcf;
-  --color-field-edge: #8c7a63;
+  --color-field-edge: #7d6b52;
   --color-accent: #8a5a1e;
   --color-accent-strong: #6f4715;
   --color-accent-ink: #fdf8ec;
@@ -90,7 +90,7 @@ body {
   font-family: var(--font-body);
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.65;
   word-break: keep-all;
   overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
@@ -218,7 +218,7 @@ textarea {
 
 .wordmark-sub {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-ink-muted);
   line-height: 1.2;
 }
@@ -227,6 +227,7 @@ textarea {
   display: flex;
   align-items: center;
   gap: 4px;
+  margin-left: auto;
 }
 
 .save-state {
@@ -234,7 +235,7 @@ textarea {
   align-items: center;
   gap: 4px;
   margin-right: 8px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-ink-muted);
 }
 
@@ -248,11 +249,11 @@ textarea {
   justify-content: center;
   min-width: 40px;
   gap: 8px;
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 8px;
   border: 1px solid transparent;
   border-radius: var(--radius);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-ink-soft);
   background: transparent;
 }
@@ -263,7 +264,7 @@ textarea {
 }
 
 .tool-button-icon {
-  width: 40px;
+  width: 44px;
   justify-content: center;
   padding: 0;
 }
@@ -285,28 +286,28 @@ textarea {
 
 .date-main {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 17px;
   color: var(--color-ink);
 }
 
 .date-note {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-ink-muted);
 }
 
 .date-return {
   margin-left: auto;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* ---------- passage ---------- */
 
 .passage {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 236px;
+  grid-template-columns: minmax(0, 1fr) 220px;
   align-items: end;
-  gap: 24px 56px;
-  padding-block: 36px 64px;
+  gap: 24px 48px;
+  padding-block: 36px 56px;
   border-bottom: 1px solid var(--color-line-soft);
 }
 
@@ -315,7 +316,7 @@ textarea {
 }
 
 .passage-side {
-  padding-left: 28px;
+  padding-left: 24px;
   padding-bottom: 4px;
   border-left: 1px solid var(--color-line-soft);
 }
@@ -323,7 +324,7 @@ textarea {
 .passage-rhythm {
   font-family: var(--font-display);
   font-size: 14px;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--color-ink-muted);
   max-width: 18ch;
 }
@@ -336,26 +337,26 @@ textarea {
 }
 
 .passage-ref {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--color-accent);
 }
 
 .passage-ref-alt {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-ink-muted);
 }
 
 .passage-note {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-ink-muted);
   border-left: 1px solid var(--color-line);
   padding-left: 12px;
 }
 
 .verse {
-  margin: 20px 0 0;
+  margin: 24px 0 0;
   max-width: var(--reading);
 }
 
@@ -363,19 +364,19 @@ textarea {
   font-family: var(--font-display);
   font-size: 30px;
   font-weight: 400;
-  line-height: 1.74;
+  line-height: 1.72;
   color: var(--color-ink);
   overflow-wrap: break-word;
   min-width: 0;
 }
 
 .verse-secondary {
-  margin-top: 20px;
+  margin-top: 24px;
   max-width: 36rem;
   font-family: var(--font-display);
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--color-ink-muted);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--color-ink-soft);
   overflow-wrap: break-word;
 }
 
@@ -383,8 +384,16 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
-  margin-top: 20px;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.passage-flow {
+  margin-top: 24px;
+  max-width: 46ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
 }
 
 /* ---------- controls ---------- */
@@ -394,12 +403,12 @@ textarea {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 44px;
-  padding: 0 20px;
+  min-height: 48px;
+  padding: 0 24px;
   border-radius: var(--radius);
   background: var(--color-accent);
   color: var(--color-accent-ink);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
   transition: background-color 0.16s ease;
@@ -417,11 +426,11 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 40px;
-  padding: 0 8px;
+  min-height: 44px;
+  padding: 0 12px;
   border-radius: var(--radius);
   color: var(--color-ink-soft);
-  font-size: 13px;
+  font-size: 14px;
   white-space: nowrap;
   transition: color 0.16s ease, background-color 0.16s ease;
 }
@@ -434,12 +443,12 @@ textarea {
 .button-danger {
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 16px;
   border: 1px solid var(--color-danger);
   border-radius: var(--radius);
   color: var(--color-danger);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .button-danger:hover {
@@ -450,8 +459,8 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius);
   color: var(--color-ink-muted);
 }
@@ -473,24 +482,24 @@ textarea {
 }
 
 .section-title {
-  font-size: 24px;
+  font-size: 26px;
   text-wrap: balance;
-  line-height: 1.35;
+  line-height: 1.32;
   overflow-wrap: break-word;
   min-width: 0;
 }
 
 .section-lead {
-  margin-top: 8px;
-  font-size: 14px;
-  line-height: 1.65;
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.7;
   color: var(--color-ink-muted);
 }
 
 .spread-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  margin-top: 36px;
+  margin-top: 32px;
 }
 
 .spread-column {
@@ -512,13 +521,13 @@ textarea {
 .name-input {
   width: 100%;
   max-width: 260px;
-  padding: 2px 0 8px;
+  padding: 4px 0 8px;
   border: 0;
   border-bottom: 1px solid var(--color-field-edge);
   border-radius: 0;
   background: transparent;
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 21px;
   color: var(--color-ink);
 }
 
@@ -551,23 +560,23 @@ textarea {
 
 .field-label {
   display: block;
-  margin-bottom: 4px;
-  font-size: 13px;
-  color: var(--color-ink-muted);
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--color-ink-soft);
 }
 
 .field-input {
   display: block;
   width: 100%;
-  min-height: 66px;
+  min-height: 64px;
   padding: 8px 0 12px;
   border: 0;
   border-bottom: 1px solid var(--color-field-edge);
   border-radius: 0;
   background: transparent;
   font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.72;
+  font-size: 16px;
+  line-height: 1.75;
   color: var(--color-ink);
   resize: none;
   overflow: hidden;
@@ -575,7 +584,7 @@ textarea {
 
 .field-input::placeholder {
   color: var(--color-ink-muted);
-  opacity: 0.85;
+  opacity: 0.95;
 }
 
 .field-input:hover {
@@ -588,13 +597,13 @@ textarea {
 }
 
 .field-single {
-  min-height: 40px;
+  min-height: 44px;
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .share-button {
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
 .spread-foot {
@@ -603,14 +612,21 @@ textarea {
   align-items: center;
   justify-content: space-between;
   gap: 8px 24px;
-  margin-top: 36px;
-  padding-top: 16px;
+  margin-top: 32px;
+  padding-top: 20px;
   border-top: 1px solid var(--color-line-soft);
 }
 
-.fine-print {
-  font-size: 12px;
+.foot-hint {
+  max-width: 52ch;
+  font-size: 14px;
   line-height: 1.65;
+  color: var(--color-ink-muted);
+}
+
+.fine-print {
+  font-size: 13px;
+  line-height: 1.7;
   color: var(--color-ink-muted);
   max-width: 62ch;
 }
@@ -626,8 +642,8 @@ textarea {
     "done done";
   align-items: center;
   gap: 8px 40px;
-  margin-block: 56px;
-  padding: 32px;
+  margin-block: 48px;
+  padding: 28px 32px;
   border: 1px solid var(--color-line-soft);
   border-radius: var(--radius);
   background: var(--color-surface);
@@ -646,19 +662,20 @@ textarea {
 }
 
 .timer-title {
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1.4;
 }
 
 .timer-lead {
-  margin-top: 4px;
-  font-size: 13px;
-  color: var(--color-ink-muted);
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
 }
 
 .timer-durations {
   display: flex;
-  margin-top: 24px;
+  margin-top: 20px;
   width: fit-content;
   border: 1px solid var(--color-line);
   border-radius: var(--radius);
@@ -666,10 +683,10 @@ textarea {
 }
 
 .duration {
-  min-height: 40px;
-  min-width: 64px;
+  min-height: 44px;
+  min-width: 68px;
   padding: 0 16px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-ink-soft);
   border-left: 1px solid var(--color-line);
   transition: background-color 0.16s ease, color 0.16s ease;
@@ -742,7 +759,7 @@ textarea {
 }
 
 .switch-label {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-ink-soft);
 }
 
@@ -795,7 +812,7 @@ textarea {
 
 .timer-clock {
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: 26px;
   font-variant-numeric: tabular-nums;
   color: var(--color-ink);
   line-height: 1;
@@ -810,7 +827,7 @@ textarea {
 }
 
 .timer-start {
-  min-width: 120px;
+  min-width: 132px;
 }
 
 .timer-done {
@@ -828,13 +845,13 @@ textarea {
 
 .timer-done-title {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 24px;
   color: var(--color-ink);
 }
 
 .timer-done-body {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 16px;
   color: var(--color-accent);
 }
 
@@ -847,32 +864,29 @@ textarea {
 
 .past-list {
   list-style: none;
-  margin: 32px 0 0;
+  margin: 28px 0 0;
   padding: 0;
   border-top: 1px solid var(--color-line);
 }
 
 .past-year {
-  display: grid;
-  grid-template-columns: 128px minmax(0, 1fr);
-  gap: 8px 40px;
-  padding-block: 28px;
+  padding-block: 32px;
 }
 
 .past-year + .past-year {
   border-top: 1px solid var(--color-line-soft);
 }
 
-.past-when {
+.past-head {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
 }
 
 .past-year-number {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: 0.02em;
@@ -881,17 +895,18 @@ textarea {
 }
 
 .past-ago {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-ink-muted);
 }
 
 .past-open {
-  margin-top: 4px;
-  margin-left: -8px;
+  margin-left: auto;
+  font-size: 14px;
 }
 
 .past-body {
   min-width: 0;
+  margin-top: 12px;
 }
 
 .past-ref {
@@ -900,22 +915,22 @@ textarea {
   align-items: baseline;
   gap: 4px 12px;
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.5;
   color: var(--color-ink-soft);
 }
 
 .past-ref-alt {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-ink-muted);
 }
 
 .past-cols {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 20px 40px;
-  margin-top: 16px;
+  gap: 24px 40px;
+  margin-top: 20px;
 }
 
 .past-col {
@@ -925,23 +940,24 @@ textarea {
 .past-name {
   padding-bottom: 8px;
   border-bottom: 1px solid var(--color-line-soft);
-  font-size: 13px;
-  color: var(--color-ink-muted);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
 }
 
 .past-field {
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
 .past-field-label {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-ink-muted);
 }
 
 .past-field-text {
   margin-top: 4px;
-  font-size: 14px;
-  line-height: 1.75;
+  font-size: 15.5px;
+  line-height: 1.8;
   color: var(--color-ink-soft);
 }
 
@@ -958,51 +974,74 @@ textarea {
   margin-top: 20px;
   padding-top: 16px;
   border-top: 1px solid var(--color-line-soft);
-  font-size: 12px;
-  line-height: 1.65;
+  font-size: 13px;
+  line-height: 1.7;
   color: var(--color-ink-muted);
 }
 
 /* ---------- archive ---------- */
 
 .archive {
-  padding-block: 8px 56px;
+  padding-block: 8px 48px;
 }
 
-.archive-head {
+.archive-summary {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px 24px;
-  max-width: none;
+  align-items: baseline;
+  gap: 4px 16px;
+  min-height: 64px;
+  padding-block: 20px;
+  border-bottom: 1px solid var(--color-line-soft);
+  cursor: pointer;
+  list-style: none;
 }
 
-.archive-tools {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 8px;
+.archive-summary::-webkit-details-marker {
+  display: none;
+}
+
+.archive-summary:hover .section-title {
+  color: var(--color-accent-strong);
+}
+
+.archive-summary-count {
+  font-size: 14px;
+  color: var(--color-ink-muted);
+}
+
+.archive-chevron {
+  margin-left: auto;
+  align-self: center;
+  color: var(--color-ink-muted);
+  transition: transform 0.16s ease;
+}
+
+.archive-details[open] .archive-chevron {
+  transform: rotate(180deg);
+}
+
+.archive-content {
+  padding-top: 24px;
 }
 
 .search {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  min-height: 40px;
+  gap: 12px;
+  min-height: 48px;
   padding: 0 4px;
   border-bottom: 1px solid var(--color-field-edge);
   color: var(--color-ink-muted);
 }
 
 .search input {
-  width: 190px;
-  max-width: 100%;
-  padding: 8px 0;
+  width: 100%;
+  padding: 12px 0;
   border: 0;
   border-radius: 0;
   background: transparent;
-  font-size: 13px;
+  font-size: 16px;
   color: var(--color-ink);
 }
 
@@ -1019,14 +1058,14 @@ textarea {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 32px;
+  margin-top: 24px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--color-line-soft);
 }
 
 .month-label {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 17px;
   color: var(--color-ink);
 }
 
@@ -1038,9 +1077,9 @@ textarea {
 }
 
 .month-weekday {
-  padding-block: 4px;
+  padding-block: 8px;
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-ink-muted);
 }
 
@@ -1049,10 +1088,10 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
+  min-height: 44px;
   border: 1px solid transparent;
   border-radius: var(--radius);
-  font-size: 14px;
+  font-size: 15px;
   font-variant-numeric: tabular-nums;
   color: var(--color-ink-muted);
   transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
@@ -1077,7 +1116,7 @@ textarea {
 }
 
 .month-cell-blank {
-  min-height: 40px;
+  min-height: 44px;
 }
 
 .month-dot {
@@ -1104,7 +1143,7 @@ textarea {
 
 .archive-open {
   display: grid;
-  grid-template-columns: 84px minmax(0, 1fr);
+  grid-template-columns: 92px minmax(0, 1fr);
   gap: 16px;
   width: 100%;
   padding: 16px 0;
@@ -1113,12 +1152,12 @@ textarea {
 }
 
 .archive-date {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-ink-muted);
 }
 
 .archive-snippet {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--color-ink-soft);
   overflow: hidden;
@@ -1132,7 +1171,7 @@ textarea {
 
 .archive-empty {
   padding: 24px 0;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--color-ink-muted);
 }
 
@@ -1140,7 +1179,7 @@ textarea {
 
 .footer {
   display: grid;
-  gap: 4px;
+  gap: 8px;
   padding-block: 32px 56px;
   border-top: 1px solid var(--color-line-soft);
 }
@@ -1181,7 +1220,7 @@ textarea {
 }
 
 .dialog-title {
-  font-size: 21px;
+  font-size: 22px;
   line-height: 1.3;
   padding-top: 4px;
   text-wrap: balance;
@@ -1190,9 +1229,9 @@ textarea {
 }
 
 .dialog-lead {
-  margin-bottom: 16px;
-  font-size: 14px;
-  line-height: 1.65;
+  margin-bottom: 20px;
+  font-size: 15px;
+  line-height: 1.7;
   color: var(--color-ink-muted);
 }
 
@@ -1204,8 +1243,8 @@ textarea {
   background: var(--color-sunk);
   color: var(--color-ink-soft);
   font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.6;
+  font-size: 13px;
+  line-height: 1.7;
   resize: none;
   word-break: break-all;
 }
@@ -1228,10 +1267,55 @@ textarea {
   justify-content: flex-start;
 }
 
+.dialog-hint {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+}
+
+.code-details {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-line-soft);
+}
+
+.code-details summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  list-style: none;
+}
+
+.code-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.code-details summary:hover {
+  color: var(--color-ink);
+}
+
+.code-details[open] summary {
+  margin-bottom: 12px;
+}
+
+.code-chevron {
+  color: var(--color-ink-muted);
+  transition: transform 0.16s ease;
+}
+
+.code-details[open] .code-chevron {
+  transform: rotate(180deg);
+}
+
 .dialog-note {
   min-height: 1.5em;
-  margin-top: 8px;
-  font-size: 13px;
+  margin-top: 12px;
+  font-size: 14px;
   color: var(--color-accent);
 }
 
@@ -1246,9 +1330,9 @@ textarea {
 }
 
 .setting-title {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-ink-muted);
 }
 
@@ -1273,11 +1357,11 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 40px;
-  padding: 0 12px;
+  min-height: 44px;
+  padding: 0 16px;
   border: 1px solid var(--color-line);
   border-radius: var(--radius);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-ink-soft);
 }
 
@@ -1319,10 +1403,10 @@ textarea {
 
 .passage-option {
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr) 20px;
-  gap: 12px;
+  grid-template-columns: 104px minmax(0, 1fr) 20px;
+  gap: 16px;
   width: 100%;
-  padding: 12px 4px;
+  padding: 16px 4px;
   text-align: left;
   align-items: baseline;
   border-bottom: 1px solid var(--color-line-soft);
@@ -1334,7 +1418,7 @@ textarea {
 
 .passage-option-ref {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-ink-muted);
 }
 
@@ -1347,8 +1431,8 @@ textarea {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 14.5px;
+  line-height: 1.65;
   color: var(--color-ink-soft);
 }
 
@@ -1369,11 +1453,11 @@ textarea {
   justify-content: space-between;
   gap: 8px 16px;
   margin-top: 24px;
-  padding: 12px 16px;
+  padding: 16px;
   border: 1px solid var(--color-line);
   border-radius: var(--radius);
   background: var(--color-surface);
-  font-size: 14px;
+  font-size: 15px;
   color: var(--color-ink-soft);
 }
 
@@ -1405,7 +1489,7 @@ textarea {
   border-radius: var(--radius);
   background: var(--color-surface-2);
   color: var(--color-ink);
-  font-size: 14px;
+  font-size: 15px;
   box-shadow: 0 8px 16px var(--color-shadow);
   transform: translateX(-50%);
 }
@@ -1415,7 +1499,7 @@ textarea {
 }
 
 .toast-undo {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-accent);
   white-space: nowrap;
 }
@@ -1424,8 +1508,8 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   color: var(--color-ink-muted);
 }
 
@@ -1451,27 +1535,18 @@ textarea {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 4px 8px;
-    margin-top: 8px;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .passage-flow {
+    margin-top: 24px;
   }
 }
 
 @media (max-width: 860px) {
   .past-year {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
-    padding-block: 24px;
-  }
-
-  .past-when {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px 12px;
-  }
-
-  .past-open {
-    margin: 0;
+    padding-block: 28px;
   }
 
   .spread-column,
@@ -1517,12 +1592,13 @@ textarea {
   }
 
   .verse-primary {
-    font-size: 23px;
-    line-height: 1.76;
+    font-size: 24px;
+    line-height: 1.78;
   }
 
   .verse-secondary {
-    font-size: 14px;
+    font-size: 16px;
+    line-height: 1.8;
   }
 
   .spread {
@@ -1538,8 +1614,13 @@ textarea {
     gap: 20px;
   }
 
+  .past-col + .past-col {
+    padding-top: 20px;
+    border-top: 1px solid var(--color-line-soft);
+  }
+
   .section-title {
-    font-size: 21px;
+    font-size: 23px;
   }
 
   .spread-grid {
@@ -1570,15 +1651,7 @@ textarea {
     padding-bottom: 40px;
   }
 
-  .archive-tools {
-    width: 100%;
-  }
-
   .search {
-    flex: 1;
-  }
-
-  .search input {
     width: 100%;
   }
 
@@ -1588,7 +1661,7 @@ textarea {
   }
 
   .archive-open {
-    grid-template-columns: 68px minmax(0, 1fr);
+    grid-template-columns: 76px minmax(0, 1fr);
     gap: 12px;
   }
 
@@ -1601,8 +1674,8 @@ textarea {
   }
 
   .passage-option {
-    grid-template-columns: 72px minmax(0, 1fr) 16px;
-    gap: 8px;
+    grid-template-columns: 80px minmax(0, 1fr) 16px;
+    gap: 12px;
   }
 
   .footer {

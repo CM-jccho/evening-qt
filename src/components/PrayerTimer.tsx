@@ -7,14 +7,13 @@ import { playChime, primeAudio } from '../lib/chime'
 interface Props {
   lang: Lang
   chime: boolean
-  onToggleChime: (value: boolean) => void
 }
 
 const DURATIONS = [60, 180, 300]
 const RADIUS = 56
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 
-export function PrayerTimer({ lang, chime, onToggleChime }: Props) {
+export function PrayerTimer({ lang, chime }: Props) {
   const t = (key: Parameters<typeof translate>[1], vars?: Record<string, string | number>) =>
     translate(lang, key, vars)
   const [duration, setDuration] = useState(180)
@@ -83,21 +82,6 @@ export function PrayerTimer({ lang, chime, onToggleChime }: Props) {
             </button>
           ))}
         </div>
-
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={chime}
-            onChange={(e) => {
-              if (e.target.checked) primeAudio()
-              onToggleChime(e.target.checked)
-            }}
-          />
-          <span className="switch-track" aria-hidden="true">
-            <span className="switch-dot" />
-          </span>
-          <span className="switch-label">{t('timer.chime')}</span>
-        </label>
       </div>
 
       <div className="timer-dial">

@@ -33,7 +33,6 @@ export default function App() {
   const [store, setStore] = useState<Store>(() => loadStore())
   const [viewDate, setViewDate] = useState<string>(() => todayKey())
   const [dialog, setDialog] = useState<DialogKind>(null)
-  const [pickerStart, setPickerStart] = useState<'list' | 'edit'>('list')
   const [shareWho, setShareWho] = useState<PersonKey>('a')
   const [copied, setCopied] = useState<'code' | 'link' | null>(null)
   const [importValue, setImportValue] = useState('')
@@ -145,10 +144,6 @@ export default function App() {
   }
 
   /* passage actions */
-  const anotherPassage = () => {
-    mutate((rec) => ({ ...rec, index: ((rec.index ?? passageIndexFor(viewDate)) + 1) % passages.length }))
-  }
-
   const pickPassage = (index: number) => {
     mutate((rec) => ({ ...rec, custom: null, index }))
     setDialog(null)
@@ -406,17 +401,13 @@ export default function App() {
           lang={lang}
           custom={Boolean(record.custom)}
           labels={{
-            another: t('passage.another'),
-            edit: t('passage.edit'),
+            switchPassage: t('passage.switch'),
             start: t('passage.start'),
             fromYou: t('passage.fromYou'),
             rhythm: t('passage.rhythm'),
+            flow: t('passage.flow'),
           }}
-          onAnother={anotherPassage}
-          onEdit={() => {
-            setPickerStart('edit')
-            setDialog('passage')
-          }}
+          onSwitch={() => setDialog('passage')}
           onStart={startWriting}
         />
 
@@ -430,7 +421,7 @@ export default function App() {
           onImport={openImport}
         />
 
-        <PrayerTimer lang={lang} chime={store.settings.chime} onToggleChime={setChime} />
+        <PrayerTimer lang={lang} chime={store.settings.chime} />
 
         <PastYears
           entries={pastEntries}
@@ -442,19 +433,11 @@ export default function App() {
           onOpen={openDate}
         />
 
-        <Archive
-          lang={lang}
-          records={store.records}
-          selected={viewDate}
-          onOpenDate={openDate}
-          onExport={exportRecord}
-          onImportFile={importFile}
-        />
+        <Archive lang={lang} records={store.records} selected={viewDate} onOpenDate={openDate} />
 
         <footer className="footer">
           <p className="fine-print">{t('footer.note')}</p>
           <p className="fine-print">{t('footer.translation')}</p>
-          <p className="fine-print">{t('footer.help')}</p>
         </footer>
       </main>
 
@@ -481,7 +464,6 @@ export default function App() {
         passages={passages}
         currentIndex={chosenIndex}
         custom={Boolean(record.custom)}
-        startInEdit={pickerStart === 'edit'}
         fallback={passage}
         onPick={pickPassage}
         onSaveCustom={saveCustomPassage}

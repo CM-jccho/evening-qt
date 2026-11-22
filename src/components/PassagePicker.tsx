@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Check, PencilLine } from 'lucide-react'
 import { Dialog } from './Dialog'
 import type { Lang } from '../lib/types'
@@ -15,7 +15,6 @@ interface Props {
   passages: PassageItem[]
   currentIndex: number
   custom: boolean
-  startInEdit: boolean
   fallback: PassageView
   onPick: (index: number) => void
   onSaveCustom: (passage: PassageView) => void
@@ -29,7 +28,6 @@ export function PassagePicker({
   passages,
   currentIndex,
   custom,
-  startInEdit,
   fallback,
   onPick,
   onSaveCustom,
@@ -40,10 +38,24 @@ export function PassagePicker({
   const [mode, setMode] = useState<'list' | 'edit'>('list')
   const [form, setForm] = useState<PassageView>({ refKo: '', refEn: '', ko: '', en: '' })
   const [invalid, setInvalid] = useState(false)
+  const listRef = useRef<HTMLUListElement | null>(null)
+  const activeRef = useRef<HTMLButtonElement | null>(null)
+
+  /* open the list at the passage tonight is using */
+  useEffect(() => {
+    if (!open) return
+    const id = window.setTimeout(() => {
+      const list = listRef.current
+      const active = activeRef.current
+      if (!list || !active) return
+      list.scrollTop = Math.max(0, active.offsetTop - list.clientHeight / 2 + active.clientHeight / 2)
+    }, 40)
+    return () => window.clearTimeout(id)
+  }, [open])
 
   useEffect(() => {
     if (!open) return
-    setMode(startInEdit ? 'edit' : 'list')
+    setMode('list')
     setInvalid(false)
     setForm({
       refKo: fallback.refKo,
@@ -51,7 +63,7 @@ export function PassagePicker({
       ko: fallback.ko,
       en: fallback.en,
     })
-  }, [open, fallback, startInEdit])
+  }, [open, fallback])
 
   const applyCustom = () => {
     if (!form.refKo.trim() && !form.refEn.trim()) {
@@ -81,11 +93,12 @@ export function PassagePicker({
       {mode === 'list' ? (
         <>
           <p className="dialog-lead">{t('passageList.lead')}</p>
-          <ul className="passage-list">
+          <ul className="passage-list" ref={listRef}>
             {passages.map((item, index) => (
               <li key={item.day}>
                 <button
                   type="button"
+                  ref={index === currentIndex && !custom ? activeRef : undefined}
                   className={index === currentIndex && !custom ? 'passage-option passage-option-active' : 'passage-option'}
                   onClick={() => onPick(index)}
                 >

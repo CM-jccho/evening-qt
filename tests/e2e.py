@@ -125,18 +125,25 @@ def run():
 
         # ---------- 4. another passage ----------
         first_ref = page.locator(".passage-ref").first.inner_text().strip()
-        page.get_by_role("button", name="다른 말씀 보기").click()
+        page.get_by_role("button", name="말씀 바꾸기").click()
+        page.wait_for_timeout(500)
+        check("말씀 바꾸기: 목록이 열린다", page.locator(".passage-list").is_visible())
+        check("말씀 바꾸기: 지금 말씀이 표시된다", page.locator(".passage-option-active").count() == 1)
+        page.locator(".passage-option").first.click()
         wait_saved(page)
         second_ref = page.locator(".passage-ref").first.inner_text().strip()
-        check("다른 말씀 보기: 구절이 바뀐다", first_ref != second_ref, f"{first_ref} -> {second_ref}")
+        check("말씀 바꾸기: 구절이 바뀐다", first_ref != second_ref, f"{first_ref} -> {second_ref}")
+        check("말씀 바꾸기: 목록이 닫힌다", page.locator("dialog[open]").count() == 0)
         page.reload(wait_until="networkidle")
         settle(page)
-        check("다른 말씀: 새로고침 유지", page.locator(".passage-ref").first.inner_text().strip() == second_ref)
+        check("말씀 바꾸기: 새로고침 유지", page.locator(".passage-ref").first.inner_text().strip() == second_ref)
 
         # ---------- 5. custom passage ----------
-        page.get_by_role("button", name="말씀 직접 고르기").click()
-        page.wait_for_timeout(500)
-        check("말씀 편집기가 바로 열린다", page.locator("#dialog-오늘의-말씀-직접-적기").is_visible())
+        page.get_by_role("button", name="말씀 바꾸기").click()
+        page.wait_for_timeout(400)
+        page.get_by_role("button", name="말씀 직접 적기").click()
+        page.wait_for_timeout(400)
+        check("말씀 편집기 열림", page.locator("#dialog-오늘의-말씀-직접-적기").is_visible())
         page.locator(".editor-grid input").nth(0).fill("시편 4:8")
         page.locator(".editor-grid input").nth(1).fill("Psalm 4:8")
         page.locator(".editor-grid textarea").nth(0).fill("내가 평안히 눕고 자기도 하리니")
@@ -149,7 +156,9 @@ def run():
         settle(page)
         check("직접 적은 말씀 유지", "내가 평안히 눕고" in page.locator(".verse-primary").inner_text())
 
-        page.get_by_role("button", name="말씀 직접 고르기").click()
+        page.get_by_role("button", name="말씀 바꾸기").click()
+        page.wait_for_timeout(400)
+        page.get_by_role("button", name="말씀 직접 적기").click()
         page.wait_for_timeout(400)
         page.get_by_role("button", name="기본 말씀으로").click()
         page.wait_for_timeout(400)
@@ -160,6 +169,10 @@ def run():
         wait_saved(page)
         page.locator(".share-button").nth(1).click()
         page.wait_for_timeout(500)
+        check("공유 창: 링크가 먼저", page.locator("dialog[open] .button-primary").inner_text().find("링크") >= 0)
+        check("공유 창: 코드는 접혀 있다", page.locator(".code-details").get_attribute("open") is None)
+        page.locator(".code-details summary").click()
+        page.wait_for_timeout(300)
         code = page.locator("#share-code").input_value()
         check("공유 코드 생성", code.startswith("SELAH1-"), code[:24])
         payload = json.loads(base64.urlsafe_b64decode(code[7:] + "=" * (-len(code[7:]) % 4)))
@@ -176,7 +189,7 @@ def run():
         # ---------- 7. import in the same page (merge + undo) ----------
         page.locator("#b-gratitude").fill("원래 적어 둔 감사")
         wait_saved(page)
-        page.get_by_role("button", name="배우자 기록 불러오기").click()
+        page.get_by_role("button", name="받은 링크로 합치기").click()
         page.wait_for_timeout(400)
         check("불러오기 창 열림", page.locator("#import-code").is_visible())
         page.locator("#import-code").fill("쓰레기같은코드")
@@ -234,6 +247,10 @@ def run():
 
         # ---------- 10. archive and past date ----------
         page.locator(".archive").scroll_into_view_if_needed()
+        check("기록: 기본은 접혀 있다", page.locator(".archive-details").get_attribute("open") is None)
+        page.locator(".archive-summary").click()
+        page.wait_for_timeout(400)
+        check("기록: 펼친다", page.locator(".archive-details").get_attribute("open") is not None)
         page.get_by_role("button", name=ko_date(yesterday)).click()
         page.wait_for_timeout(600)
         check("지난 날짜 열림", ko_date(yesterday) in page.locator(".date-main").inner_text())
@@ -255,9 +272,12 @@ def run():
         page.locator(".search input").fill("")
         page.wait_for_timeout(300)
 
-        # ---------- 11. backup ----------
+        # ---------- 11. backup (settings only: the record keeps search alone) ----------
+        check("기록: 백업 버튼은 설정에만", page.locator(".archive").get_by_role("button", name="내보내기").count() == 0)
+        page.locator(".tool-button-icon").click()
+        page.wait_for_timeout(400)
         with page.expect_download() as dl_info:
-            page.get_by_role("button", name="내보내기").click()
+            page.locator("dialog[open]").get_by_role("button", name="내보내기").click()
         download = dl_info.value
         path = os.path.join(tempfile.gettempdir(), "evening-qt-backup.json")
         download.save_as(path)
@@ -271,10 +291,12 @@ def run():
         }
         edited = os.path.join(tempfile.gettempdir(), "evening-qt-import.json")
         json.dump(backup, open(edited, "w", encoding="utf-8"), ensure_ascii=False)
-        page.locator(".archive input[type=file]").set_input_files(edited)
+        page.locator("dialog[open] input[type=file]").set_input_files(edited)
         page.wait_for_timeout(700)
         check("백업 불러오기", "2026-01-05" in storage(page)["records"])
         check("불러오기 안내", "불러왔" in page.locator(".toast").inner_text())
+        page.keyboard.press("Escape")
+        page.wait_for_timeout(300)
 
         # ---------- 12. theme and language ----------
         page.locator(".tool-button-theme").click()
@@ -335,9 +357,9 @@ def run():
         )
         check("입력 칸마다 이름표", unlabeled == 0, str(unlabeled))
         unnamed = page.evaluate(
-            """() => [...document.querySelectorAll('button')].filter(b => !(b.innerText.trim() || b.getAttribute('aria-label'))).length"""
+            """() => [...document.querySelectorAll('button')].filter(b => !((b.innerText || b.textContent).trim() || b.getAttribute('aria-label'))).map(b => b.className || b.outerHTML.slice(0, 60))"""
         )
-        check("버튼마다 이름", unnamed == 0, str(unnamed))
+        check("버튼마다 이름", len(unnamed) == 0, str(unnamed[:4]))
         page.keyboard.press("Tab")
         outline = page.evaluate("getComputedStyle(document.activeElement).outlineStyle")
         check("키보드 포커스 표시", outline not in ("none", ""), outline)
@@ -359,6 +381,42 @@ def run():
             if diff > 0 or body > 0:
                 overflow.append((w, diff, body))
         check("가로 오버플로 없음 (320~1920)", not overflow, str(overflow))
+
+        # ---------- 15b. readability ----------
+        page.set_viewport_size({"width": 390, "height": 844})
+        page.wait_for_timeout(300)
+        sizes = page.evaluate(
+            """() => {
+                const size = (sel) => {
+                    const el = document.querySelector(sel)
+                    return el ? parseFloat(getComputedStyle(el).fontSize) : 0
+                }
+                return {
+                    input: size('#a-gratitude'),
+                    label: size('.field-label'),
+                    date: size('.date-note'),
+                    secondary: size('.verse-secondary'),
+                    lead: size('.section-lead'),
+                    search: size('.search input'),
+                    fine: size('.fine-print'),
+                    name: size('.name-input'),
+                }
+            }"""
+        )
+        check("가독성: 입력 칸 16px 이상", sizes["input"] >= 16, str(sizes["input"]))
+        check("가독성: 항목 이름표 14px 이상", sizes["label"] >= 14, str(sizes["label"]))
+        check("가독성: 날짜 보조 14px 이상", sizes["date"] >= 14, str(sizes["date"]))
+        check("가독성: 영문 본문 16px", sizes["secondary"] >= 16, str(sizes["secondary"]))
+        check("가독성: 안내 문장 15px 이상", sizes["lead"] >= 15, str(sizes["lead"]))
+        check("가독성: 검색 칸 16px", sizes["search"] >= 16, str(sizes["search"]))
+        check("가독성: 각주 13px 이상", sizes["fine"] >= 13, str(sizes["fine"]))
+        check("가독성: 이름 칸 20px 이상", sizes["name"] >= 20, str(sizes["name"]))
+
+        check("동선: 읽고 적고 기도 안내가 첫 화면에 보인다", page.locator(".passage-flow").is_visible())
+        flow_box = page.locator(".passage-actions").bounding_box()
+        check("동선: 첫 화면에 적기 버튼이 보인다", bool(flow_box) and flow_box["y"] + flow_box["height"] <= 844, str(flow_box))
+        page.set_viewport_size({"width": 1440, "height": 900})
+        page.wait_for_timeout(200)
 
         # ---------- 16. passage data ----------
         check("말씀 31개", len(PASSAGES) == 31)
@@ -519,6 +577,15 @@ def run():
             "() => { const el = document.querySelector('.past'); return el.scrollWidth - el.clientWidth; }"
         )
         check("지난 기록: 모바일 가로 넘침 없음", mobile_past <= 0, str(mobile_past))
+        past_sizes = page.evaluate(
+            """() => {
+                const size = (sel) => parseFloat(getComputedStyle(document.querySelector(sel)).fontSize)
+                return { text: size('.past-field-text'), label: size('.past-field-label'), ago: size('.past-ago'), year: size('.past-year-number') }
+            }"""
+        )
+        check("지난 기록: 본문 15px 이상", past_sizes["text"] >= 15, str(past_sizes["text"]))
+        check("지난 기록: 이름표 13px 이상", past_sizes["label"] >= 13, str(past_sizes["label"]))
+        check("지난 기록: 연도 28px 이상", past_sizes["year"] >= 28, str(past_sizes["year"]))
         page.set_viewport_size({"width": 1440, "height": 900})
 
         # ---------- 19. final screenshots with a calm, lived-in page ----------
@@ -574,20 +641,20 @@ def run():
 
         page.evaluate("window.scrollTo(0, 0)")
         page.wait_for_timeout(400)
-        page.screenshot(path=f"{OUT}/evening-qt-v2-desktop.png")
+        page.screenshot(path=f"{OUT}/evening-qt-v3-desktop.png")
 
         page.locator(".past").scroll_into_view_if_needed()
         page.wait_for_timeout(400)
-        page.locator(".past").screenshot(path=f"{OUT}/evening-qt-v2-past.png")
+        page.locator(".past").screenshot(path=f"{OUT}/evening-qt-v3-past.png")
         page.evaluate("window.scrollBy(0, -72)")
         page.wait_for_timeout(300)
-        page.screenshot(path=f"{OUT}/evening-qt-v2-past-context.png")
+        page.screenshot(path=f"{OUT}/evening-qt-v3-past-context.png")
 
         page.locator(".tool-button-theme").click()
         page.wait_for_timeout(700)
         page.evaluate("window.scrollTo(0, 0)")
         page.wait_for_timeout(300)
-        page.screenshot(path=f"{OUT}/evening-qt-v2-light.png")
+        page.screenshot(path=f"{OUT}/evening-qt-v3-light.png")
         page.locator(".tool-button-theme").click()
         page.wait_for_timeout(600)
 
@@ -595,12 +662,12 @@ def run():
         page.wait_for_timeout(700)
         page.evaluate("window.scrollTo(0, 0)")
         page.wait_for_timeout(300)
-        page.screenshot(path=f"{OUT}/evening-qt-v2-mobile.png")
+        page.screenshot(path=f"{OUT}/evening-qt-v3-mobile.png")
 
         page.locator(".past").scroll_into_view_if_needed()
         page.evaluate("window.scrollBy(0, -72)")
         page.wait_for_timeout(400)
-        page.screenshot(path=f"{OUT}/evening-qt-v2-mobile-past.png")
+        page.screenshot(path=f"{OUT}/evening-qt-v3-mobile-past.png")
 
         check("콘솔 오류 없음", not errors, str(errors[:3]))
 

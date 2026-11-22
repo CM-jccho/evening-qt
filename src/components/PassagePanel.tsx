@@ -1,4 +1,4 @@
-import { PencilLine, RefreshCw } from 'lucide-react'
+import { PencilLine } from 'lucide-react'
 import type { Lang } from '../lib/types'
 
 export interface PassageView {
@@ -13,18 +13,17 @@ interface Props {
   lang: Lang
   custom: boolean
   labels: {
-    another: string
-    edit: string
+    switchPassage: string
     start: string
     fromYou: string
     rhythm: string
+    flow: string
   }
-  onAnother: () => void
-  onEdit: () => void
+  onSwitch: () => void
   onStart: () => void
 }
 
-export function PassagePanel({ passage, lang, custom, labels, onAnother, onEdit, onStart }: Props) {
+export function PassagePanel({ passage, lang, custom, labels, onSwitch, onStart }: Props) {
   const primaryRef = lang === 'ko' ? passage.refKo : passage.refEn
   const secondaryRef = lang === 'ko' ? passage.refEn : passage.refKo
   const primaryText = lang === 'ko' ? passage.ko : passage.en
@@ -53,6 +52,8 @@ export function PassagePanel({ passage, lang, custom, labels, onAnother, onEdit,
             {secondaryText}
           </p>
         </blockquote>
+
+        <p className="passage-flow">{labels.flow}</p>
       </div>
 
       <div className="passage-side">
@@ -61,13 +62,9 @@ export function PassagePanel({ passage, lang, custom, labels, onAnother, onEdit,
           <button type="button" className="button-primary" onClick={onStart}>
             {labels.start}
           </button>
-          <button type="button" className="button-quiet" onClick={onAnother}>
-            <RefreshCw size={15} aria-hidden="true" />
-            {labels.another}
-          </button>
-          <button type="button" className="button-quiet" onClick={onEdit}>
+          <button type="button" className="button-quiet" onClick={onSwitch}>
             <PencilLine size={15} aria-hidden="true" />
-            {labels.edit}
+            {labels.switchPassage}
           </button>
         </div>
       </div>

@@ -19,7 +19,7 @@ export function AutoTextarea({ id, value, onChange, placeholder, label, minRows 
     const el = ref.current
     if (!el) return
     el.style.height = 'auto'
-    el.style.height = `${Math.max(el.scrollHeight, 66)}px`
+    el.style.height = `${Math.max(el.scrollHeight, 64)}px`
   }, [value])
 
   return (
