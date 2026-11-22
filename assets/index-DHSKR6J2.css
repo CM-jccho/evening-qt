@@ -17,6 +17,19 @@
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
       --tw-outline-style: solid;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
     }
   }
 }
@@ -285,6 +298,10 @@
 @layer components;
 
 @layer utilities {
+  .visible {
+    visibility: visible;
+  }
+
   .fixed {
     position: fixed;
   }
@@ -327,6 +344,14 @@
     display: block;
   }
 
+  .hidden {
+    display: none;
+  }
+
+  .table {
+    display: table;
+  }
+
   .shadow {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, #0000001a), 0 1px 2px -1px var(--tw-shadow-color, #0000001a);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -335,6 +360,10 @@
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
+  }
+
+  .filter {
+    filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
   }
 
   .transition {
@@ -1807,6 +1836,53 @@ input, textarea {
   display: inline-flex;
 }
 
+.sync-status {
+  color: var(--color-ink-soft);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  display: flex;
+}
+
+.sync-status[data-state="live"] svg {
+  color: var(--color-accent);
+}
+
+.sync-status[data-state="offline"], .sync-status[data-state="error"] {
+  color: var(--color-danger);
+}
+
+.sync-status-when {
+  color: var(--color-ink-muted);
+}
+
+.sync-note {
+  color: var(--color-ink-muted);
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.sync-off {
+  min-height: 44px;
+  color: var(--color-ink-muted);
+  text-underline-offset: 3px;
+  margin-top: 16px;
+  padding: 0 2px;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.sync-off:hover {
+  color: var(--color-danger);
+}
+
+.sync-confirm {
+  margin-top: 16px;
+}
+
 @media (max-width: 960px) {
   .passage {
     grid-template-columns: minmax(0, 1fr);
@@ -2078,4 +2154,70 @@ input, textarea {
   syntax: "*";
   inherits: false;
   initial-value: solid;
+}
+
+@property --tw-blur {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-invert {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false
+}
+
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+
+@property --tw-drop-shadow-size {
+  syntax: "*";
+  inherits: false
 }
