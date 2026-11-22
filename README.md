@@ -8,6 +8,7 @@
 - 언어: 한국어 기본, English 전환 (말씀은 한/영 병기)
 - 화면: 웜 램프 다크(기본)와 크림 종이 라이트, 헤더에서 한 번에 전환
 - 배포: `base: './'` 상대 경로 — GitHub Pages 하위 경로, Vercel, Netlify 어디서든 `dist`만 올리면 동작합니다
+- 공개 주소: **https://cm-jccho.github.io/evening-qt/** (`gh-pages` 브랜치 배포)
 
 ## 실행
 
@@ -84,7 +85,8 @@ Node 20.19 이상 또는 22.12 이상을 권장합니다(Vite 7 기준).
 - **Hallmark `sloplint` v2.0.0** `--scope app --genre editorial` — 정적 + 렌더(`--url`) **0 FAIL, 0 REFLEX, 0 WARN**
 - **Playwright E2E 118/118** — 첫 방문, 말씀 자동·직접 입력, 두 칸 저장·새로고침 유지, 이름, 공유 코드/링크/합치기/되돌리기, 타이머(1분 완료 포함), 지난 날짜·검색, 백업 내보내기·불러오기, 테마·언어, 샘플 분리, 같은 날의 지난 묵상(과거 연도 노출·다른 날짜 미노출·빈 상태·샘플 연도·모바일 한 칸), 대화상자, 접근성, 320~1920px 가로 오버플로 0, 콘솔 오류 0
 - **Astryx(React 19 디자인 규약) 점검** — 토큰만 사용, 4px 그리드, AA 대비, 포커스 링, 40px 터치 영역, 아이콘 `aria-hidden`, 대화상자 포커스, `prefers-reduced-motion` (`tests/astryx.py`)
-- 스크린샷: `browser/evening-qt-v2-desktop.png`, `browser/evening-qt-v2-mobile.png`, `browser/evening-qt-v2-past.png`, `browser/evening-qt-v2-past-context.png`, `browser/evening-qt-v2-mobile-past.png`, `browser/evening-qt-v2-light.png`
+- 스크린샷: `browser/evening-qt-v2-desktop.png`, `browser/evening-qt-v2-mobile.png`, `browser/evening-qt-v2-past.png`, `browser/evening-qt-v2-past-context.png`, `browser/evening-qt-v2-mobile-past.png`, `browser/evening-qt-v2-light.png`, 그리고 실사이트 `browser/evening-qt-v2-live-desktop.png`·`-live-mobile.png`·`-live-past.png`
+- **배포 경로 검사** — `python3 tests/deploy-path.py`: `dist`를 `/evening-qt/` 하위 폴더로 옮겨 서빙해도 모든 요청 200, 자산이 하위 경로에서 로드, 콘솔 오류 0 (8/8)
 
 테스트 재실행(`tests/serve.sh`가 미리보기 서버를 띄우고 게이트를 차례로 돌립니다):
 
