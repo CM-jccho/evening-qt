@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko" data-theme="lamp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>밤의 묵상, Selah</title>
+    <meta
+      name="description"
+      content="두 사람이 하루를 마무리하며 함께 쓰는 저녁 말씀과 묵상, 기도. 오늘의 말씀과 각자의 감사, 묵상, 기도 제목을 한 화면에 담고 이 기기에만 저장합니다."
+    />
+    <meta name="theme-color" content="#141311" />
+    <script>
+      // the saved screen and language apply before the first paint
+      try {
+        var saved = JSON.parse(localStorage.getItem('evening_qt_v1') || '{}')
+        if (saved.settings && saved.settings.theme === 'paper') {
+          document.documentElement.dataset.theme = 'paper'
+        }
+        if (saved.settings && saved.settings.lang === 'en') {
+          document.documentElement.lang = 'en'
+        }
+      } catch (e) {}
+    </script>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="alternate icon" href="./favicon.ico" sizes="any" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css"
+    />
+    <script type="module" crossorigin src="./assets/index-BOai0aVq.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DfIbsCkr.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
