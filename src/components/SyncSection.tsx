@@ -50,14 +50,8 @@ export function SyncSection({ lang, sync }: Props) {
     else setDraft('')
   }
 
-  if (!sync.available) {
-    return (
-      <div className="setting-block">
-        <h3 className="setting-title">{t('sync.title')}</h3>
-        <p className="dialog-lead">{t('sync.unavailable')}</p>
-      </div>
-    )
-  }
+  /* 동기화 서버가 설정되지 않은 빌드에서는 아무 것도 내보이지 않는다(이 기기 저장만) */
+  if (!sync.available) return null
 
   if (connected) {
     const Live = sync.info.status === 'live' ? CloudCheck : CloudOff
