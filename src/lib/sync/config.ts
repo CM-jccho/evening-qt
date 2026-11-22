@@ -9,13 +9,17 @@ export interface SyncConfig {
   table: string
 }
 
+/* ↓↓↓ Supabase 프로젝트를 만든 뒤 이 두 줄만 채우면 된다 (anon 키는 공개 키) ↓↓↓ */
+const PROJECT_URL = '' // 예: 'https://abcdefghijklm.supabase.co'
+const PROJECT_KEY = '' // Settings → API 의 anon public key
+
 /* 테스트 서버나 다른 프로젝트로 돌려 볼 때는 빌드할 때 VITE_SYNC_URL·VITE_SYNC_KEY 로 바꾼다 */
 const ENV_URL = (import.meta.env.VITE_SYNC_URL as string | undefined)?.trim() ?? ''
 const ENV_KEY = (import.meta.env.VITE_SYNC_KEY as string | undefined)?.trim() ?? ''
 
 export const SYNC_CONFIG: SyncConfig = {
-  url: ENV_URL || '',
-  anonKey: ENV_KEY || '',
+  url: ENV_URL || PROJECT_URL,
+  anonKey: ENV_KEY || PROJECT_KEY,
   table: 'qt_rooms',
 }
 
